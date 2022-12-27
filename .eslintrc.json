@@ -17,6 +17,6 @@
 	"plugins": ["react"],
 	"rules": {
 		"semi": "off",
-		"no-console": "error"
+		"no-console": "warn"
 	}
 }
