@@ -1,3 +1,3 @@
 /** @format */
 
-export {};
+export {Loader} from './lib';

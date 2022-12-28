@@ -1,3 +1,3 @@
 /** @format */
 
-export {};
+export {default as rootRouter} from './rootRouter';
