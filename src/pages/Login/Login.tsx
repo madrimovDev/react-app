@@ -1,33 +1,64 @@
 /** @format */
 
-import React from 'react';
-import {Alert, AlertIcon, AlertTitle, Button, Divider, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Image, Input, Stack} from '@chakra-ui/react';
-import Wave from '../../assets/wave.svg'
+import React, {FormEvent, useEffect, useRef, useState} from 'react';
+import {
+	Button,
+	Divider,
+	Flex,
+	FormControl,
+	FormErrorMessage,
+	FormLabel,
+	Heading,
+	Image,
+	Input,
+	Stack,
+} from '@chakra-ui/react';
+import Wave from '../../assets/wave.svg';
+import authService from '../../services/authService';
+import {useNotification} from '../../hooks';
 
 const Login = () => {
+	const emailRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
+	const [data, setData] = useState<{status: number | undefined; data: any} | null>(null);
+	const {open, notifications} = useNotification();
+
+	const onSubmit = async (event: FormEvent) => {
+		event.preventDefault();
+
+		const user = {
+			email: emailRef.current?.value,
+			password: passwordRef.current?.value,
+		};
+
+		const res = await authService.login(user.email!, user.password!);
+
+	};
+
 	return (
+		//@ts-ignore
 		<Flex
 			w='100%'
 			h='100vh'
 			justify='center'
 			align='center'
-    >
-      <Heading as='h2' size='2xl' pos='absolute' left='20px' top='20px'>
-        Faveo
-      </Heading>
+		>
+			<Heading
+				as='h2'
+				size='2xl'
+				pos='absolute'
+				left='20px'
+				top='20px'
+			>
+				Faveo
+			</Heading>
 
-      <Alert variant='subtle' status='success' pos='absolute' w={300} top='30'>
-        <AlertIcon />
-        <AlertTitle>
-          Info
-        </AlertTitle>
-      </Alert>
-
-      <Flex
-        as='form'
-        pos='relative'
-        zIndex={1}
-        w='300px'
+			<Flex
+				onSubmit={onSubmit}
+				as='form'
+				pos='relative'
+				zIndex={1}
+				w='300px'
 				rowGap={6}
 				flexDir='column'
 				border='1px'
@@ -45,19 +76,41 @@ const Login = () => {
 				</Heading>
 				<Divider />
 				<Stack spacing={4}>
-					<FormControl >
+					<FormControl>
 						<FormLabel>Email</FormLabel>
-            <Input type='email' />
-            <FormErrorMessage>Email Not Found</FormErrorMessage>
+						<Input
+							ref={emailRef}
+							type='text'
+						/>
+						<FormErrorMessage>Email Not Found</FormErrorMessage>
 					</FormControl>
 					<FormControl>
 						<FormLabel>Password</FormLabel>
-						<Input type='password' minLength={4} />
+						<Input
+							ref={passwordRef}
+							type='password'
+							minLength={4}
+						/>
 					</FormControl>
 				</Stack>
-				<Button type='submit' colorScheme='blue'>Login</Button>
-      </Flex>
-      <Image userSelect={'none'} pos='absolute' h='100%' w='100%' objectFit='cover' zIndex={0} opacity={0.2} bottom={0} src={Wave} />
+				<Button
+					type='submit'
+					colorScheme='blue'
+				>
+					Login
+				</Button>
+			</Flex>
+			<Image
+				userSelect={'none'}
+				pos='absolute'
+				h='100%'
+				w='100%'
+				objectFit='cover'
+				zIndex={0}
+				opacity={0.2}
+				bottom={0}
+				src={Wave}
+			/>
 		</Flex>
 	);
 };
