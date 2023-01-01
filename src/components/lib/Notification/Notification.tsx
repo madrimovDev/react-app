@@ -12,9 +12,7 @@ const Notification = ({notification}: {notification: INotification}) => {
 
 	const dest = () => {
 		setShow(false);
-		setTimeout(() => {
-			destroy(notification.id);
-		}, 500);
+		destroy(notification.id);
 	};
 
 	const autoDestroy = () => {

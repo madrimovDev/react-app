@@ -2,6 +2,7 @@
 
 import React, {FormEvent, useEffect, useRef, useState} from 'react';
 import {
+	Box,
 	Button,
 	Divider,
 	Flex,
@@ -21,22 +22,15 @@ const Login = () => {
 	const emailRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
 	const [data, setData] = useState<{status: number | undefined; data: any} | null>(null);
-	const {open, notifications} = useNotification();
+	const {notify, notifications} = useNotification();
 
 	const onSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 
-		const user = {
-			email: emailRef.current?.value,
-			password: passwordRef.current?.value,
-		};
-
-		const res = await authService.login(user.email!, user.password!);
-
+		notify.success('title', 'desc');
 	};
 
 	return (
-		//@ts-ignore
 		<Flex
 			w='100%'
 			h='100vh'
@@ -52,7 +46,6 @@ const Login = () => {
 			>
 				Faveo
 			</Heading>
-
 			<Flex
 				onSubmit={onSubmit}
 				as='form'
@@ -100,7 +93,7 @@ const Login = () => {
 					Login
 				</Button>
 			</Flex>
-			<Image
+			<Box
 				userSelect={'none'}
 				pos='absolute'
 				h='100%'
@@ -109,7 +102,7 @@ const Login = () => {
 				zIndex={0}
 				opacity={0.2}
 				bottom={0}
-				src={Wave}
+				backgroundImage={Wave}
 			/>
 		</Flex>
 	);

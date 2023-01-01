@@ -14,7 +14,12 @@ export interface INotification extends Notification {
 
 interface INotificationContext {
 	notifications: INotification[];
-	open: (notification: Notification) => void;
+	notify: {
+		success: (title: string, desc?: string) => void;
+		warning: (title: string, desc?: string) => void;
+		error: (title: string, desc?: string) => void;
+		info: (title: string, desc?: string) => void;
+	};
 	destroy: (id: string) => void;
 }
 
